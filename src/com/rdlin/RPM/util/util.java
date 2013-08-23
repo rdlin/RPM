@@ -1,19 +1,16 @@
 package com.rdlin.RPM.util;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
-public class util {
+public class Util{
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-	public static String encodeBWT(String input){
+	public String encodeBWT(String input){
 		//small input case
 		if (input.length()==0 || input.length()==1){
 			return input + "$";
@@ -34,7 +31,7 @@ public class util {
 		}
 		return output;
 	}
-	public static String decodeBWT(String input){	
+	public String decodeBWT(String input){	
 		char[] inputArray = input.toCharArray();
 		//sorting input
 		char[] decodeArray = inputArray.clone();		
@@ -64,7 +61,8 @@ public class util {
 		return output;
 	}
 	
-	public static String stripChars(String input, String strip) {
+	//removes instances of "strip" in "input"
+	public String stripChars(String input, String strip) {
 	    StringBuilder result = new StringBuilder();
 	    for (char c : input.toCharArray()) {
 	        if (strip.indexOf(c) == -1) {
@@ -74,10 +72,11 @@ public class util {
 	    return result.toString();
 	}
 	
-	public static String removeDuplicates(String s) {
+	//removes all duplicates from string
+	public String removeDuplicates(String input) {
 	    StringBuilder noDupes = new StringBuilder();
-	    for (int i = 0; i < s.length(); i++) {
-	        String si = s.substring(i, i + 1);
+	    for (int i = 0; i < input.length(); i++) {
+	        String si = input.substring(i, i + 1);
 	        if (noDupes.indexOf(si) == -1) {
 	            noDupes.append(si);
 	        }
@@ -85,7 +84,7 @@ public class util {
 	    return noDupes.toString();
 	}
 	
-	public static String encodeKeyword(String input, String keyword){
+	public String encodeKeyword(String input, String keyword){
 		keyword = removeDuplicates(keyword);
 		String encode = "";
 		String output = "";
@@ -106,7 +105,7 @@ public class util {
 		return output;	
 	}
 	
-	public static String decodeKeyword(String input, String keyword){
+	public String decodeKeyword(String input, String keyword){
 		keyword = removeDuplicates(keyword);
 		String encode = "";
 		String output = "";
@@ -126,5 +125,27 @@ public class util {
 		//System.out.println(output);
 		return output;	
 	}
+	
+	public String encode(String input, String keyword){
+		return encodeBWT(encodeKeyword(input, keyword));
+	}
+	
+	public String decode(String input, String keyword){
+		return decodeKeyword(decodeBWT(input), keyword);
+	}
+	
+	//read lines from file
+	public static List<String> readLines(String filename) throws IOException {
+        FileReader fileReader = new FileReader(filename);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        List<String> lines = new ArrayList<String>();
+        String line = null;
+        while ((line = bufferedReader.readLine()) != null) {
+        	System.out.println(line);
+            lines.add(line);
+        }
+        bufferedReader.close();
+        return lines;
+    }
 
 }

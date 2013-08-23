@@ -1,11 +1,12 @@
 package com.rdlin.RPM.test;
 
 import static org.junit.Assert.*;
-import com.rdlin.RPM.util.util;
+
+import com.rdlin.RPM.util.Util;
 
 import org.junit.Test;
 
-public class outputTest extends util{
+public class outputTest extends Util{
 	@Test
     public void testEncryptDecrypt(){
     	String text = "abcdef";
